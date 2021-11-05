@@ -1,0 +1,19 @@
+version: '3'
+services:
+  nextjs: 
+    image: nextjs-image
+    container_name: nextjs-container
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile
+    ports:
+      - 6100:6100
+    # environment:
+    #   - NODE_ENV=production
+    #   - API_URL=http://apihost:5050
+    #   - CDN_URL=http://127.0.0.1:6100
+    #   # - SERVER_PORT=6100
+    #   - DEPLOY_TYPE=production
+    # extra_hosts:
+    #   - "apihost:127.0.0.1"
+      

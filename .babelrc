@@ -1,0 +1,48 @@
+{
+    "presets": ["next/babel"],
+    "env": {
+        "development": {
+            "plugins": [
+                [
+                    "styled-components",
+                    {
+                        "ssr": true,
+                        "displayName": true,
+                        "preprocess": false
+                    }
+                ]
+            ]
+        },
+        "production": {
+            "plugins": [
+                [
+                    "styled-components",
+                    {
+                        "ssr": true,
+                        "displayName": false,
+                        "preprocess": false
+                    }
+                ]
+            ]
+        }
+    },
+    "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@components": "./src/components",
+          "@useHooks": "./src/useHooks",
+          "@redux": "./src/redux",
+          "@containers": "./src/containers",
+          "@constants": "./src/constants",
+          "@widgets": "./src/widgets",
+          "@utils": "./src/utils",
+          "@static": "./public/static",
+          "@config": "./config",
+          "@i18n": "./i18n"
+        }
+      }
+    ]
+  ]
+}

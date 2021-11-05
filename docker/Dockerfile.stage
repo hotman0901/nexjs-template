@@ -1,0 +1,50 @@
+FROM node:12.22.0
+
+# Set working directory
+WORKDIR /usr/app
+
+# Install PM2 globally
+RUN npm install --global pm2@latest
+
+RUN pm2 update
+
+# Copy "package.json" and "package-lock.json" before other files
+# Utilise Docker cache to save re-installing dependencies if unchanged
+COPY ./package*.json ./
+
+# Copy all files
+COPY ./ ./
+
+RUN chmod -R u+w /usr/app
+
+# Install dependencies
+RUN npm install
+
+
+# ARG NODE_ENV
+# ENV NODE_ENV=$NODE_ENV
+
+# ARG API_URL
+# ENV API_URL=$API_URL
+
+# ARG CDN_URL
+# ENV CDN_URL=$CDN_URL
+
+# ARG SERVER_PORT
+# ENV SERVER_PORT=$SERVER_PORT
+
+# ARG DEPLOY_TYPE
+# ENV DEPLOY_TYPE=$DEPLOY_TYPE
+
+ARG URI
+ENV REACT_APP_URI=$URI
+
+# Build app
+RUN npm run build:stage
+
+# Expose the listening port
+EXPOSE 6100
+
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD node healthcheck.js
+
+CMD [ "pm2-runtime", "start", "--name", "web-service", "--watch", "npm", "--", "run", "start" ]

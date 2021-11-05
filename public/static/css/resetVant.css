@@ -1,0 +1,9 @@
+/* https://github.com/Aisen60/vant-theme */
+/* 這邊下載回來的要把前綴--nav 改成 --rv */
+:root {
+  --rv-button-default-background-color: red;
+  --rv-button-primary-background-color: #15395EFF;
+  --rv-button-primary-border-color: #EA3489FF;
+  --rv-button-success-background-color: #517A64FF;
+  --rv-button-warning-border-color: #EBDDD6FF;
+}

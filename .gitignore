@@ -1,0 +1,11 @@
+.next/*
+build/*
+node_modules/*
+.eslintcache
+package-lock.json
+yarn.lock
+.vscode/*
+_next/*
+cdn/*
+dist/*
+yarn-error.log

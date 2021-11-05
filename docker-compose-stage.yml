@@ -1,0 +1,15 @@
+version: '3'
+services:
+  nextjs: 
+    image: nextjs-image
+    container_name: nextjs-container
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.stage
+    # environment:
+    #   - NODE_ENV=production
+    #   - API_URL=
+    #   - CDN_URL=
+    #   - DEPLOY_TYPE=development
+    ports:
+      - 6100:6100
