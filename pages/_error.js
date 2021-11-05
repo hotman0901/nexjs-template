@@ -1,5 +1,3 @@
-// import React from 'react';
-// import { AnimatePresence } from 'framer-motion';
 import PropTypes from 'prop-types';
 import { useTranslations } from 'next-intl';
 

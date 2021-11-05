@@ -31,7 +31,6 @@ const ExpensiveTree = memo(props => {
 const Demo = memo(() => {
   const [count, { inc }] = useCounter(0);
   const options = { step: 1 };
-  console.log(12312);
 
   useCustomCompareEffect(
     () => {
@@ -50,11 +49,7 @@ const Demo = memo(() => {
 
 export default function Index() {
   const [text, updateText] = useState('Initial value');
-
-  const handleSubmit = useEffectCallback(() => {
-    console.log(`Text: ${text}`);
-  }, [text]);
-
+  const handleSubmit = useEffectCallback(() => {}, [text]);
   return (
     <>
       <Demo />
