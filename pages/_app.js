@@ -9,8 +9,11 @@ import { getBaseCDN } from '@utils/file';
 import Script from 'next/script';
 // 之後如果有統一色彩可以重這邊替換
 import '../public/static/css/resetVant.css';
+import 'tailwindcss/tailwind.css';
+import './tail.css';
+import { App } from 'tailwind-mobile/react';
 
-const App = ({ Component, pageProps }) => (
+const MyApp = ({ Component, pageProps }) => (
   <NextIntlProvider
     // To achieve consistent date, time and number formatting
     // across the app, you can define a set of global formats.
@@ -52,20 +55,22 @@ const App = ({ Component, pageProps }) => (
           <meta name="mobile-web-app-capable" content="yes" />
         </Head>
         <Script src={`${getBaseCDN()}/static/js/fastclick.js`} />
-        <Component {...pageProps} useSuspense={false} />
+        <App theme="ios">
+          <Component {...pageProps} useSuspense={false} />
+        </App>
       </>
     </Layout>
   </NextIntlProvider>
 );
 
-App.defaultProps = {
+MyApp.defaultProps = {
   pageProps: {},
   Component: {},
 };
 
-App.propTypes = {
+MyApp.propTypes = {
   pageProps: PropTypes.any,
   Component: PropTypes.any,
 };
 
-export default wrapper.withRedux(App);
+export default wrapper.withRedux(MyApp);
