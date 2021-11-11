@@ -44,7 +44,7 @@ export default class WrapperDocument extends Document {
       <Html lang="en">
         <Head>
           <link
-            rel="shortcut icon"
+            rel="icon"
             type="image/x-icon"
             href={`${getBaseCDN()}/static/img/favicon/favicon.png`}
           />

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { NavBar, Toast } from 'react-vant';
 import Router from 'next/router';
 
-const Games = () => {
+const Games = function () {
   const t = useTranslations('Index');
 
   return (

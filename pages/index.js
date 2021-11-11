@@ -18,7 +18,7 @@ const BennyButton = styled(Button)`
   /* background: red !important; */
 `;
 
-const Index = () => {
+const Index = function () {
   const router = useRouter();
   const { locale } = router;
   const t = useTranslations('Index');

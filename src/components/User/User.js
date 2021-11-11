@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 
 const useUser = () => useSelector(({ game }) => game);
 
-const UserInfo = () => {
+const UserInfo = function () {
   const { character, isFetchedOnServer, error } = useUser();
   const { name, id, username, email, phone, website } = character;
 

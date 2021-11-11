@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useTranslations } from 'next-intl';
 
-const Error = ({ statusCode }) => {
+const Error = function ({ statusCode }) {
   const t = useTranslations('Index');
 
   return (
@@ -22,6 +22,7 @@ Error.getInitialProps = async ({ res, err, locale }) => {
     },
   };
 };
+
 Error.defaultProps = {
   statusCode: '',
 };

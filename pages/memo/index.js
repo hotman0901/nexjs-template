@@ -47,7 +47,7 @@ const Demo = memo(() => {
   );
 });
 
-export default function Index() {
+const Index = function () {
   const [text, updateText] = useState('Initial value');
   const handleSubmit = useEffectCallback(() => {}, [text]);
   return (
@@ -57,4 +57,6 @@ export default function Index() {
       <ExpensiveTree onClick={handleSubmit} />
     </>
   );
-}
+};
+
+export default Index;

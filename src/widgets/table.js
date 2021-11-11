@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { combinedStyle } from '../utils/style';
+import { combinedStyle } from '@utils/style';
 
 export const WGTable = styled.div`
   height: 100%;

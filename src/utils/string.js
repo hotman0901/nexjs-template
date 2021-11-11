@@ -23,7 +23,7 @@ export const preZeroFill = (o, size) => {
   try {
     const num = Number(o);
     // eslint-disable-next-line no-restricted-properties
-    if (num >= Math.pow(10, size)) {
+    if (num >= 10 ** size) {
       // 如果num本身位数不小于size位
       return num.toString();
     }

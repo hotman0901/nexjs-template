@@ -7,13 +7,15 @@ import PropTypes from 'prop-types';
  *
  * @param {*} { header, content, footer }
  */
-const MobileLayout = ({ header, content, footer }) => (
-  <WGContainer>
-    {header()}
-    <WGScroll>{content()}</WGScroll>
-    {footer()}
-  </WGContainer>
-);
+const MobileLayout = function ({ header, content, footer }) {
+  return (
+    <WGContainer>
+      {header()}
+      <WGScroll>{content()}</WGScroll>
+      {footer()}
+    </WGContainer>
+  );
+};
 
 MobileLayout.defaultProps = {
   header: () => {},
