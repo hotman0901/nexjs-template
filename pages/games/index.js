@@ -1,11 +1,13 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { NavBar, Toast } from 'react-vant';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
+import { changeLang } from '@utils/lan';
 
 const Games = function () {
   const t = useTranslations('Index');
 
+  const { locale, asPath } = useRouter();
   return (
     <div>
       <NavBar
@@ -17,6 +19,7 @@ const Games = function () {
       />
       <h1>ＧＡＭＥＳ-{process.env.MY_NODE_ENV}</h1>
       <br />
+      <h3>{locale}</h3>
       <p>change language</p>
       <br />
       <h1>{t('title')}</h1>
@@ -32,6 +35,9 @@ const Games = function () {
       <Link href="/games" locale="tw">
         <a>To /tw/index</a>
       </Link>
+      <div onClick={() => changeLang(asPath, 'tw')}>tw</div>
+      <div onClick={() => changeLang(asPath, 'en')}>en</div>
+      <div onClick={() => changeLang(asPath, 'de')}>de</div>
     </div>
   );
 };
