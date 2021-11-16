@@ -7,34 +7,36 @@ export const WGContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  z-index: 0;
 `;
 
 export const WGScroll = styled(motion.div)`
   height: auto;
   flex: auto;
   overflow: scroll;
+  z-index: 0;
 `;
 
 export const WGHeader = styled.div`
-  padding: 5px 10px;
-  font-size: 15px;
-  font-weight: 400;
-  color: #fff;
   display: flex;
   align-items: center;
-  justify-content: center;
   text-align: center;
-  background: #ffaa00;
 `;
 
 export const WGFooter = styled.div`
-  padding: 5px 10px;
-  font-size: 15px;
-  font-weight: 400;
-  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: #aaaa00;
+  z-index: 0;
+`;
+
+export const WGDropMenuText = styled.div`
+  position: relative;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: var(--rv-dropdown-menu-title-padding);
+  color: var(--rv-dropdown-menu-title-text-color);
+  font-size: var(--rv-dropdown-menu-title-font-size);
+  line-height: var(--rv-dropdown-menu-title-line-height);
 `;

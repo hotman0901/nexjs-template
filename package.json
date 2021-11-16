@@ -4,7 +4,7 @@
   "description": "nextjs-typescript-i18n-prettier-eslint-redux-observable-styled-component",
   "main": "server.js",
   "scripts": {
-    "dev": "next -p 6100",
+    "dev": "env-cmd -f .env.stage next -p 6100",
     "build": "next build",
     "build:stage": "env-cmd -f .env.stage next build",
     "build:dev": "env-cmd -f .env.dev next build",
@@ -32,6 +32,7 @@
     "bignumber.js": "^9.0.1",
     "deep-equal": "^2.0.5",
     "env-cmd": "^10.1.0",
+    "eruda": "^2.4.1",
     "framer-motion": "^5.3.0",
     "http-proxy-middleware": "^2.0.1",
     "immer": "^9.0.6",

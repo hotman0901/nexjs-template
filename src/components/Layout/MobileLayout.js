@@ -2,6 +2,7 @@ import { WGContainer, WGScroll } from '@widgets/div';
 import { NavBar, Skeleton } from 'react-vant';
 import PropTypes from 'prop-types';
 import { AnimatePresence } from 'framer-motion';
+
 /**
  * @description mobile layout 用，分 header content footer
  *
@@ -35,14 +36,7 @@ const MobileLayout = function ({ header, content, footer, loading }) {
       ) : (
         <WGContainer>
           {header}
-          <WGScroll
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            key="container"
-          >
-            {content}
-          </WGScroll>
+          {content}
           {footer}
         </WGContainer>
       )}
