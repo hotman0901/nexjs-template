@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Tabbar, NavBar, Toast, Button, ConfigProvider } from 'react-vant';
 import { useDispatch } from 'react-redux';
 import { stopFetchingUsers, startFetchingUsers } from '@redux/actions/game';
@@ -23,6 +23,14 @@ const Index = function () {
   const { locale } = router;
   const t = useTranslations('Index');
   const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    return () => {};
+  }, []);
 
   useEffect(() => {
     dispatch(startFetchingUsers());
@@ -62,21 +70,8 @@ const Index = function () {
           <a>To games</a>
         </Link>
         <br />
-        <p>change language</p>
         <h1>{t('title')}</h1>
         <br />
-        {/* 需要加上 locale 參數判斷 */}
-        <Link href="/" locale="en" replace>
-          <a>To /en/index</a>
-        </Link>
-        &nbsp;&nbsp;&nbsp;
-        <Link href="/" locale="de" replace>
-          <a>To /de/index</a>
-        </Link>
-        &nbsp;&nbsp;&nbsp;
-        <Link href="/" locale="tw" replace>
-          <a>To /tw/index</a>
-        </Link>
       </div>
     </div>
   );
@@ -89,7 +84,14 @@ const Index = function () {
     </Tabbar>
   );
 
-  return <MobileLayout header={header} content={content} footer={footer} />;
+  return (
+    <MobileLayout
+      header={header()}
+      content={content()}
+      footer={footer()}
+      loading={loading}
+    />
+  );
 };
 
 // i18n 要放在page 裡面，若放在 container 會失效

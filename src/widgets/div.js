@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-// import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 // import { combinedStyle } from '@utils/style';
 // import { themeRootVars } from '@constants/css/vantTheme';
 
@@ -9,7 +9,7 @@ export const WGContainer = styled.div`
   height: 100%;
 `;
 
-export const WGScroll = styled.div`
+export const WGScroll = styled(motion.div)`
   height: auto;
   flex: auto;
   overflow: scroll;

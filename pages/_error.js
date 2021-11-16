@@ -12,16 +12,24 @@ const Error = function ({ statusCode }) {
   );
 };
 
-Error.getInitialProps = async ({ res, err, locale }) => {
+// Error.getInitialProps = async ({ res, err, locale }) => {
+//   const { statusCode } = res;
+//   console.log('locale:', locale);
+//   const msg = await import(`@i18n/index/${locale}.json`);
+//   return {
+//     statusCode: res ? statusCode : err ? err.statusCode : null,
+//     messages: msg.default,
+//   };
+// };
+
+export async function getInitialProps({ res, err, locale }) {
   const { statusCode } = res;
+  const msg = await import(`@i18n/index/${locale}.json`);
   return {
     statusCode: res ? statusCode : err ? err.statusCode : null,
-    messages: {
-      ...require(`@i18n/shared/${locale}.json`),
-      ...require(`@i18n/index/${locale}.json`),
-    },
+    messages: msg.default,
   };
-};
+}
 
 Error.defaultProps = {
   statusCode: '',

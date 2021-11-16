@@ -21,8 +21,9 @@ const nextConfiguration = {
     ignoreDuringBuilds: true,
   },
   i18n: {
-    locales: ['en', 'de', 'tw'],
-    defaultLocale: 'tw',
+    // locales: ['en', 'de', 'tw'],
+    locales: ['ch'],
+    defaultLocale: 'ch',
     localeDetection: false,
   },
   compress: true,
