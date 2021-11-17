@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState, useMemo } from 'react';
 import {
   Tabs,
@@ -8,10 +9,13 @@ import {
   DropdownMenu,
 } from 'react-vant';
 import { useDispatch } from 'react-redux';
+import { FixedSizeList as List } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import { stopFetchingUsers, startFetchingUsers } from '@redux/actions/game';
 import MobileLayout from '@components/Layout/MobileLayout';
 import styled from 'styled-components';
 import { WGHeader, WGFooter, WGDropMenuText, WGScroll } from '@widgets/div';
+import { WGVantTans } from '@widgets/tab';
 
 const option1 = [
   { text: '截止時間', value: 0 },
@@ -43,6 +47,10 @@ const Index = function () {
     }, 500);
     return () => {};
   }, []);
+
+  const [fakeData, setData] = useState(
+    Array.from({ length: 1000 }).map((o, index) => index)
+  );
 
   useEffect(() => {
     dispatch(startFetchingUsers());
@@ -86,23 +94,53 @@ const Index = function () {
     []
   );
 
-  const content = useMemo(
-    () => (
-      <WGScroll
-        style={{ position: 'relative' }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        key="container"
-      >
-        <Tabs active="active" animated>
-          <Tabs.TabPane title="订单">{li}</Tabs.TabPane>
-          <Tabs.TabPane title="合买(2)">{li}</Tabs.TabPane>
-          <Tabs.TabPane title="待出票(3)">{li}</Tabs.TabPane>
-        </Tabs>
-      </WGScroll>
-    ),
-    []
+  const renderList = () => (
+    <AutoSizer>
+      {({ height, width }) => (
+        <List
+          className="List"
+          height={height}
+          width={width}
+          itemCount={fakeData.length}
+          itemSize={80}
+          itemData={fakeData}
+        >
+          {({ data, index, style }) => (
+            <div key={index} style={style}>
+              <SCItems>
+                <SCItem style={{ fontSize: '14px', flex: 1 }}>
+                  <div>北京单场勝平負</div>
+                  <div>单关, 1注10.00元</div>
+                </SCItem>
+                <SCItem style={{ marginRight: '10px', fontSize: '10px' }}>
+                  <div style={{ color: '#8d8d8d' }}>截止: 1天23:59:59</div>
+                  <div style={{ color: 'red' }}>预计奖金: 19~19元</div>
+                </SCItem>
+                <SCItem>
+                  <Button type="primary">接单 {data[index]}</Button>
+                </SCItem>
+              </SCItems>
+            </div>
+          )}
+        </List>
+      )}
+    </AutoSizer>
+  );
+
+  const content = () => (
+    <WGScroll
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      key="container"
+      scroll="disable"
+    >
+      <WGVantTans active="active" animated>
+        <Tabs.TabPane title="订单">{renderList()}</Tabs.TabPane>
+        <Tabs.TabPane title="合买(2)">{renderList()}</Tabs.TabPane>
+        <Tabs.TabPane title="待出票(3)">{li}</Tabs.TabPane>
+      </WGVantTans>
+    </WGScroll>
   );
   const footer = useMemo(
     () => (
@@ -121,7 +159,7 @@ const Index = function () {
   return (
     <MobileLayout
       header={header}
-      content={content}
+      content={content()}
       footer={footer}
       loading={loading}
     />

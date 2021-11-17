@@ -13,8 +13,8 @@ export const WGContainer = styled.div`
 export const WGScroll = styled(motion.div)`
   height: auto;
   flex: auto;
-  overflow: scroll;
   z-index: 0;
+  overflow: ${props => (props.scroll === 'disable' ? 'hidden' : 'scroll')};
 `;
 
 export const WGHeader = styled.div`
