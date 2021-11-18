@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import {
   Tabs,
   Tabbar,
@@ -15,7 +15,8 @@ import { stopFetchingUsers, startFetchingUsers } from '@redux/actions/game';
 import MobileLayout from '@components/Layout/MobileLayout';
 import styled from 'styled-components';
 import { WGHeader, WGFooter, WGDropMenuText, WGScroll } from '@widgets/div';
-import { WGVantTans } from '@widgets/tab';
+import { WGVantTabs } from '@widgets/tab';
+import { Virtuoso } from 'react-virtuoso';
 
 const option1 = [
   { text: '截止時間', value: 0 },
@@ -127,6 +128,62 @@ const Index = function () {
     </AutoSizer>
   );
 
+  const [users, setUsers] = useState(() => [
+    { name: 1, longText: 'lffffff' },
+    { name: 2, longText: 'lffffff' },
+    { name: 3, longText: 'lffffff' },
+    { name: 4, longText: 'lffffff' },
+    { name: 5, longText: 'lffffff' },
+    { name: 6, longText: 'lffffff' },
+    { name: 7, longText: 'lffffff' },
+    { name: 8, longText: 'lffffff' },
+    { name: 9, longText: 'lffffff' },
+    { name: 10, longText: 'lffffff' },
+    { name: 11, longText: 'lffffff' },
+    { name: 12, longText: 'lffffff' },
+    { name: 13, longText: 'lffffff' },
+    { name: 14, longText: 'lffffff' },
+    { name: 15, longText: 'lffffff' },
+    // { name: 16, longText: 'lffffff' },
+    // { name: 17, longText: 'lffffff' },
+    // { name: 18, longText: 'lffffff' },
+    // { name: 19, longText: 'lffffff' },
+    // { name: 20, longText: 'lffffff' },
+    // { name: 21, longText: 'lffffff' },
+    // { name: 22, longText: 'lffffff' },
+    // { name: 23, longText: 'lffffff' },
+    // { name: 24, longText: 'lffffff' },
+  ]);
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  const template = (index, user) => (
+    <SCItems key={index}>
+      <SCItem style={{ fontSize: '14px', flex: 1 }}>
+        <div>北京单场勝平負</div>
+        <div>单关, 1注10.00元</div>
+      </SCItem>
+      <SCItem style={{ marginRight: '10px', fontSize: '10px' }}>
+        <div style={{ color: '#8d8d8d' }}>截止: 1天23:59:59</div>
+        <div style={{ color: 'red' }}>预计奖金: 19~19元</div>
+      </SCItem>
+      <SCItem>
+        <Button type="primary">接单</Button>
+      </SCItem>
+    </SCItems>
+  );
+
+  const moreLoading = () => (
+    <div
+      style={{
+        padding: '2rem',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      Loading...
+    </div>
+  );
+
   const content = () => (
     <WGScroll
       initial={{ opacity: 0 }}
@@ -135,11 +192,43 @@ const Index = function () {
       key="container"
       scroll="disable"
     >
-      <WGVantTans active="active" animated>
-        <Tabs.TabPane title="订单">{renderList()}</Tabs.TabPane>
-        <Tabs.TabPane title="合买(2)">{renderList()}</Tabs.TabPane>
-        <Tabs.TabPane title="待出票(3)">{li}</Tabs.TabPane>
-      </WGVantTans>
+      <WGVantTabs active="active" animated>
+        <Tabs.TabPane title="订单">
+          <Virtuoso
+            // endReached={loadMore}
+            data={users}
+            isScrolling={setIsScrolling}
+            itemContent={template}
+            components={
+              {
+                // Footer: moreLoading,
+              }
+            }
+          />
+        </Tabs.TabPane>
+        {/* <Tabs.TabPane title="合买(2)">
+          <Virtuoso
+            endReached={loadMore}
+            data={users}
+            isScrolling={setIsScrolling}
+            itemContent={template}
+            components={{
+              Footer: moreLoading,
+            }}
+          />
+        </Tabs.TabPane>
+        <Tabs.TabPane title="待出票(3)">
+          <Virtuoso
+            endReached={loadMore}
+            data={users}
+            isScrolling={setIsScrolling}
+            itemContent={template}
+            components={{
+              Footer: moreLoading,
+            }}
+          />
+        </Tabs.TabPane> */}
+      </WGVantTabs>
     </WGScroll>
   );
   const footer = useMemo(
