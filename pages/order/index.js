@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import {
   Tabs,
   Tabbar,
@@ -8,15 +7,16 @@ import {
   ConfigProvider,
   DropdownMenu,
 } from 'react-vant';
-import { useDispatch } from 'react-redux';
-import { FixedSizeList as List } from 'react-window';
+// import { useDispatch } from 'react-redux';
+// import { FixedSizeList as List } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { stopFetchingUsers, startFetchingUsers } from '@redux/actions/game';
+// import { stopFetchingUsers, startFetchingUsers } from '@redux/actions/game';
 import MobileLayout from '@components/Layout/MobileLayout';
 import styled from 'styled-components';
 import { WGHeader, WGFooter, WGDropMenuText, WGScroll } from '@widgets/div';
 import { WGVantTabs } from '@widgets/tab';
-import { Virtuoso } from 'react-virtuoso';
+// import { Virtuoso } from 'react-virtuoso';
+import DynamicList, { createCache } from 'react-window-dynamic-list';
 
 const option1 = [
   { text: '截止時間', value: 0 },
@@ -40,24 +40,12 @@ const SCItem = styled.div`
 `;
 
 const Index = function () {
-  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 500);
     return () => {};
-  }, []);
-
-  const [fakeData, setData] = useState(
-    Array.from({ length: 1000 }).map((o, index) => index)
-  );
-
-  useEffect(() => {
-    dispatch(startFetchingUsers());
-    return () => {
-      dispatch(stopFetchingUsers());
-    };
   }, []);
 
   const [value, setValue] = useState({ value1: 0 });
@@ -75,114 +63,10 @@ const Index = function () {
     [value]
   );
 
-  const li = useMemo(
-    () =>
-      new Array(10).fill(0).map((i, index) => (
-        <SCItems key={index}>
-          <SCItem style={{ fontSize: '14px', flex: 1 }}>
-            <div>北京单场勝平負</div>
-            <div>单关, 1注10.00元</div>
-          </SCItem>
-          <SCItem style={{ marginRight: '10px', fontSize: '10px' }}>
-            <div style={{ color: '#8d8d8d' }}>截止: 1天23:59:59</div>
-            <div style={{ color: 'red' }}>预计奖金: 19~19元</div>
-          </SCItem>
-          <SCItem>
-            <Button type="primary">接单</Button>
-          </SCItem>
-        </SCItems>
-      )),
-    []
-  );
-
-  const renderList = () => (
-    <AutoSizer>
-      {({ height, width }) => (
-        <List
-          className="List"
-          height={height}
-          width={width}
-          itemCount={fakeData.length}
-          itemSize={80}
-          itemData={fakeData}
-        >
-          {({ data, index, style }) => (
-            <div key={index} style={style}>
-              <SCItems>
-                <SCItem style={{ fontSize: '14px', flex: 1 }}>
-                  <div>北京单场勝平負</div>
-                  <div>单关, 1注10.00元</div>
-                </SCItem>
-                <SCItem style={{ marginRight: '10px', fontSize: '10px' }}>
-                  <div style={{ color: '#8d8d8d' }}>截止: 1天23:59:59</div>
-                  <div style={{ color: 'red' }}>预计奖金: 19~19元</div>
-                </SCItem>
-                <SCItem>
-                  <Button type="primary">接单 {data[index]}</Button>
-                </SCItem>
-              </SCItems>
-            </div>
-          )}
-        </List>
-      )}
-    </AutoSizer>
-  );
-
-  const [users, setUsers] = useState(() => [
-    { name: 1, longText: 'lffffff' },
-    { name: 2, longText: 'lffffff' },
-    { name: 3, longText: 'lffffff' },
-    { name: 4, longText: 'lffffff' },
-    { name: 5, longText: 'lffffff' },
-    { name: 6, longText: 'lffffff' },
-    { name: 7, longText: 'lffffff' },
-    { name: 8, longText: 'lffffff' },
-    { name: 9, longText: 'lffffff' },
-    { name: 10, longText: 'lffffff' },
-    { name: 11, longText: 'lffffff' },
-    { name: 12, longText: 'lffffff' },
-    { name: 13, longText: 'lffffff' },
-    { name: 14, longText: 'lffffff' },
-    { name: 15, longText: 'lffffff' },
-    // { name: 16, longText: 'lffffff' },
-    // { name: 17, longText: 'lffffff' },
-    // { name: 18, longText: 'lffffff' },
-    // { name: 19, longText: 'lffffff' },
-    // { name: 20, longText: 'lffffff' },
-    // { name: 21, longText: 'lffffff' },
-    // { name: 22, longText: 'lffffff' },
-    // { name: 23, longText: 'lffffff' },
-    // { name: 24, longText: 'lffffff' },
-  ]);
-  const [isScrolling, setIsScrolling] = useState(false);
-
-  const template = (index, user) => (
-    <SCItems key={index}>
-      <SCItem style={{ fontSize: '14px', flex: 1 }}>
-        <div>北京单场勝平負</div>
-        <div>单关, 1注10.00元</div>
-      </SCItem>
-      <SCItem style={{ marginRight: '10px', fontSize: '10px' }}>
-        <div style={{ color: '#8d8d8d' }}>截止: 1天23:59:59</div>
-        <div style={{ color: 'red' }}>预计奖金: 19~19元</div>
-      </SCItem>
-      <SCItem>
-        <Button type="primary">接单</Button>
-      </SCItem>
-    </SCItems>
-  );
-
-  const moreLoading = () => (
-    <div
-      style={{
-        padding: '2rem',
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
-      Loading...
-    </div>
-  );
+  const cache = createCache();
+  const dynamicListRef = useRef();
+  // eslint-disable-next-line no-unused-vars
+  const [commands, setCommands] = useState(new Array(100).fill(0));
 
   const content = () => (
     <WGScroll
@@ -194,17 +78,37 @@ const Index = function () {
     >
       <WGVantTabs active="active" animated>
         <Tabs.TabPane title="订单">
-          <Virtuoso
-            // endReached={loadMore}
-            data={users}
-            isScrolling={setIsScrolling}
-            itemContent={template}
-            components={
-              {
-                // Footer: moreLoading,
-              }
-            }
-          />
+          <AutoSizer>
+            {({ height, width }) => (
+              <DynamicList
+                cache={cache}
+                ref={dynamicListRef}
+                data={commands}
+                width={width}
+                height={height}
+              >
+                {({ index, style }) => (
+                  <div style={style}>
+                    <SCItems>
+                      <SCItem style={{ fontSize: '14px', flex: 1 }}>
+                        <div>北京单场勝平負</div>
+                        <div>单关, 1注10.00元</div>
+                      </SCItem>
+                      <SCItem style={{ marginRight: '10px', fontSize: '10px' }}>
+                        <div style={{ color: '#8d8d8d' }}>
+                          截止: 1天23:59:59
+                        </div>
+                        <div style={{ color: 'red' }}>预计奖金: 19~19元</div>
+                      </SCItem>
+                      <SCItem>
+                        <Button type="primary">接单 {commands[index]}</Button>
+                      </SCItem>
+                    </SCItems>
+                  </div>
+                )}
+              </DynamicList>
+            )}
+          </AutoSizer>
         </Tabs.TabPane>
         {/* <Tabs.TabPane title="合买(2)">
           <Virtuoso
