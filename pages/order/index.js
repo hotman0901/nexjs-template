@@ -81,6 +81,7 @@ const Index = function () {
           <AutoSizer>
             {({ height, width }) => (
               <DynamicList
+                recalculateItemsOnResize={{ width: true, height: true }}
                 cache={cache}
                 ref={dynamicListRef}
                 data={commands}
