@@ -39,7 +39,6 @@ export default class WrapperDocument extends Document {
 
   render() {
     const { version, env } = this.props;
-
     return (
       <Html lang="en">
         <Head>
@@ -49,7 +48,6 @@ export default class WrapperDocument extends Document {
             href={`${getBaseCDN()}/static/img/favicon/favicon.png`}
           />
           {this.props.styleTags}
-
           <link
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
             rel="stylesheet"

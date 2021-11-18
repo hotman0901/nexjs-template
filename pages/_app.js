@@ -53,6 +53,35 @@ const App = function ({ Component, pageProps }) {
             <meta name="mobile-web-app-capable" content="yes" />
           </Head>
           <Script src={`${getBaseCDN()}/static/js/fastclick.js`} />
+
+          {/* mobile debug 用 */}
+          {process.env.MY_NODE_ENV !== 'production' && (
+            <Script
+              id="eruda-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                function init() {
+                  if (window.eruda) {
+                    console.log('==== eruda working ====');
+                    eruda.init();
+                  } else {
+                    console.log('==== eruda fail ====');
+                  }
+                }
+              `,
+              }}
+            />
+          )}
+
+          {/* mobile debug 用 */}
+          {/* 因為是載入第三方套件，等載入成功再 onload function 初始化 */}
+          {process.env.MY_NODE_ENV !== 'production' && (
+            <Script
+              src="https://cdn.bootcdn.net/ajax/libs/eruda/2.4.1/eruda.min.js"
+              onload="init()"
+            />
+          )}
           <Component {...pageProps} useSuspense={false} />
         </>
       </Layout>
