@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import MobileLayout from '@components/Layout/MobileLayout';
 import Router, { useRouter } from 'next/router';
+import { WGScroll } from '@widgets/div';
 import styled from 'styled-components';
 
 // vant 可以用 styled-component 包一層
@@ -59,7 +60,12 @@ const Index = function () {
   );
 
   const content = () => (
-    <div style={{ height: '2000px', position: 'relative' }}>
+    <WGScroll
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      key="container"
+    >
       <BennyButton onClick={goPage}>Games Page</BennyButton>
       <div>
         language: {locale}
@@ -73,7 +79,7 @@ const Index = function () {
         <h1>{t('title')}</h1>
         <br />
       </div>
-    </div>
+    </WGScroll>
   );
   const footer = () => (
     <Tabbar onChange={v => Toast.info(`标签${+v + 1}`)} fixed={false}>
